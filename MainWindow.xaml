@@ -1,0 +1,110 @@
+﻿<Window x:Class="kjtStore.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kjtStore"
+        mc:Ignorable="d"
+        Title="Главное окно"
+        MinHeight="220"
+        Height="220"
+        MaxHeight="220"
+        MinWidth="500"
+        Width="500"
+        MaxWidth="500"
+        Icon="pack://application:,,,/Icon.ico"
+        ResizeMode="NoResize"
+        BorderThickness="{StaticResource ThirdThickness}"
+        BorderBrush="{StaticResource BorderFirstColor}"
+        Background="{StaticResource FormBackColor}"
+        Foreground="{StaticResource TextFirstColor}">
+
+    <Grid>
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            Margin="197,27,0,0"
+            TextWrapping="Wrap"
+            Text="Авторизация"
+            VerticalAlignment="Top"
+            FontSize="18"
+            Width="121"
+            TextAlignment="Center"
+            FontWeight="Bold"
+            Background="{StaticResource TextBackColor}"
+            Foreground="{StaticResource TextFirstColor}"/>
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            Margin="57,73,0,0"
+            TextWrapping="Wrap"
+            Text="Логин:  "
+            VerticalAlignment="Top"
+            FontSize="18"
+            Width="113"
+            FontStyle="Italic"
+            TextAlignment="Right"
+            Background="{StaticResource TextBackColor}"
+            Foreground="{StaticResource TextFirstColor}"/>
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            Margin="57,118,0,0"
+            TextWrapping="Wrap"
+            Text="Пароль:  "
+            VerticalAlignment="Top"
+            FontSize="18"
+            Width="113"
+            FontStyle="Italic"
+            TextAlignment="Right"
+            Background="{StaticResource TextBackColor}"
+            Foreground="{StaticResource TextFirstColor}"/>
+
+        <TextBox x:Name="Login"
+                 HorizontalAlignment="Center"
+                 Margin="25,72,0,0"
+                 TextWrapping="Wrap"
+                 Text=""
+                 VerticalAlignment="Top"
+                 Width="150"
+                 FontSize="18"
+                 Background="{StaticResource TextBackColor}"
+                 Foreground="{StaticResource WriteTextColor}"/>
+
+        <PasswordBox x:Name="Password"
+                     HorizontalAlignment="Center"
+                     Margin="25,116,0,0"
+                     VerticalAlignment="Top"
+                     Width="150"
+                     FontSize="18"
+                     Background="{StaticResource TextBackColor}"
+                     Foreground="{StaticResource WriteTextColor}"/>
+
+        <Button Content="ОК"
+                HorizontalAlignment="Right"
+                Margin="0,0,10,50"
+                VerticalAlignment="Bottom"
+                FontSize="18"
+                Height="30"
+                Width="69"
+                Click="Button_Click"
+                BorderThickness="{StaticResource SecondThickness}"
+                BorderBrush="{StaticResource BorderSecondColor}"
+                Background="{StaticResource ButtonBackColor}"
+                Foreground="{StaticResource TextSecondColor}"/>
+
+        <Button Content="Выход"
+                HorizontalAlignment="Right"
+                Margin="0,12,10,0"
+                VerticalAlignment="Top"
+                FontSize="18"
+                Height="30"
+                Width="69"
+                Click="Button_Click_1"
+                BorderThickness="{StaticResource SecondThickness}"
+                BorderBrush="{StaticResource BorderSecondColor}"
+                Background="{StaticResource ButtonBackColor}"
+                Foreground="{StaticResource TextSecondColor}"/>
+
+    </Grid>
+</Window>

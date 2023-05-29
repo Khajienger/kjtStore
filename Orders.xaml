@@ -1,0 +1,95 @@
+﻿<Window x:Class="kjtStore.Orders"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kjtStore"
+        mc:Ignorable="d"
+        Title="Заказы"
+        MinWidth="620"
+        Width="620"
+        MaxWidth="670"
+        MinHeight="350"
+        Height="350"
+        MaxHeight="375"
+        Icon="pack://application:,,,/Icon.ico"
+        ResizeMode="NoResize"
+        BorderThickness="{StaticResource ThirdThickness}"
+        BorderBrush="{StaticResource BorderFirstColor}"
+        Background="{StaticResource FormBackColor}"
+        Foreground="{StaticResource TextFirstColor}">
+
+    <Grid>
+        
+        <Grid.ContextMenu>
+            
+            <ContextMenu Foreground="{StaticResource TextFirstColor}"
+                Background="{StaticResource TextBackColor}"
+                BorderThickness="{StaticResource FirstThickness}"
+                BorderBrush="{StaticResource BorderSecondColor}">
+                
+                <MenuItem Header = "Новый заказ"
+                          Click="OpenAddOrderWindow"
+                          Foreground="{StaticResource TextSecondColor}"
+                          BorderBrush="{StaticResource BorderSecondColor}"
+                          BorderThickness="{StaticResource FirstThickness}"
+                          Background="{StaticResource FormBackColor}"/>
+                
+                <MenuItem Header = "Удалить"
+                          Click="DeleteOrder"
+                          Foreground="{StaticResource TextSecondColor}"
+                          BorderBrush="{StaticResource BorderSecondColor}"
+                          BorderThickness="{StaticResource FirstThickness}"
+                          Background="{StaticResource FormBackColor}"/>
+                
+            </ContextMenu>
+        </Grid.ContextMenu>
+
+        <DataGrid x:Name="OrdersGrid"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding}"
+                  IsReadOnly="False"
+                  CurrentCellChanged="CurrentCellChanging"
+                  CellEditEnding="EndCurrentCellChanging"
+                  CanUserAddRows="False"
+                  Foreground="{StaticResource TextThirdColor}"
+                  Background="{StaticResource FormBackColor}">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn x:Name="id"
+                                    Binding="{Binding id}"
+                                    Header="ID"
+                                    IsReadOnly="True"
+                                    MinWidth="90"
+                                    Foreground="{StaticResource TextThirdColor}"/>
+
+                <DataGridTextColumn x:Name="email"
+                                    Binding="{Binding email}"
+                                    Header="Почта"
+                                    IsReadOnly="False"
+                                    MinWidth="150"
+                                    Foreground="{StaticResource TextThirdColor}"/>
+
+                <DataGridTextColumn x:Name="code"
+                                    Binding="{Binding code}"
+                                    Header="Код товара"
+                                    IsReadOnly="False"
+                                    MinWidth="90"
+                                    Foreground="{StaticResource TextThirdColor}"/>
+
+                <DataGridTextColumn x:Name="title"
+                                    Binding="{Binding title}"
+                                    Header="Название"
+                                    IsReadOnly="False"
+                                    MinWidth="240"
+                                    Foreground="{StaticResource TextThirdColor}"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+    </Grid>
+</Window>

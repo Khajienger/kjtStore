@@ -1,0 +1,24 @@
+﻿<Application x:Class="kjtStore.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:kjtStore"
+             StartupUri="MainWindow.xaml">
+
+    <Application.Resources>
+
+        <Thickness x:Key="FirstThickness">2</Thickness>
+        <Thickness x:Key="SecondThickness">3</Thickness>
+        <Thickness x:Key="ThirdThickness">5</Thickness>
+
+        <Brush x:Key="FormBackColor">Slategray</Brush>
+        <Brush x:Key="ButtonBackColor">Orangered</Brush>
+        <Brush x:Key="TextBackColor">Tan</Brush>
+        <Brush x:Key="WriteTextColor">Firebrick</Brush>
+        <Brush x:Key="TextFirstColor">Indigo</Brush>
+        <Brush x:Key="TextSecondColor">LightGoldenrodYellow</Brush>
+        <Brush x:Key="TextThirdColor">Black</Brush>
+        <Brush x:Key="BorderFirstColor">Black</Brush>
+        <Brush x:Key="BorderSecondColor">Midnightblue</Brush>
+
+    </Application.Resources>
+</Application>
