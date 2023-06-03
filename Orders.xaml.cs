@@ -12,14 +12,13 @@ namespace kjtStore
     {
         private AddOrderWindow addOrderWindow;
 
-        private Connections connections;
+        private Connections connections = new Connections();
 
         private DataRowView dataRowView;
 
         public Orders()
         {
             InitializeComponent();
-            connections = new Connections();
             connections.StartPreparing();
             connections.SelectOrdersTable();
             RefreshOrdersGrid();

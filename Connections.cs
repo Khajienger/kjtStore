@@ -320,10 +320,15 @@ namespace kjtStore
                         id = @id";
 
                     sqCommand = new SqlCommand(sq, sqConnection);
+                    sqCommand.ExecuteNonQuery();
+                    clientsTable.AcceptChanges();
+
+                    sqDataUpdater = new SqlDataAdapter(sq, sqConnection);
+                    SqlCommandBuilder sqCmdBuilder = new SqlCommandBuilder(sqDataUpdater); ;
+
                     sqDataUpdater.Update(clientsTable);
 
-                    //sqDataUpdater.Fill(clientsTable);
-                    //sqCommand.ExecuteNonQuery();
+
 
                     sqConnection.Dispose();
                 }

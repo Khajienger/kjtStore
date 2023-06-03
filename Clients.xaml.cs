@@ -10,13 +10,12 @@ namespace kjtStore
     /// </summary>
     public partial class Clients
     {
-        private Connections connections;
+        private Connections connections = new Connections();
         private DataRowView dataRowView;
 
         public Clients()
         {
             InitializeComponent();
-            connections = new Connections();
             connections.StartPreparing();
             connections.SelectClientsTable();
             RefreshClientsGrid();
@@ -35,8 +34,23 @@ namespace kjtStore
 
         private void EndCurrentCellChanging(object sender, DataGridCellEditEndingEventArgs e)
         {
-            dataRowView.EndEdit();
-            connections.UpdateClientsTable();
+            void OnEndChangingCycle()
+            {
+                try
+                {
+                    dataRowView.EndEdit();
+                    connections.UpdateClientsTable();
+                }
+                catch (NullReferenceException)
+                {
+                    connections.StartPreparing();
+                    OnEndChangingCycle();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{ex.Message}");
+                }
+            }
         }
 
         private void DeleteClient(object sender, RoutedEventArgs e)
