@@ -10,9 +10,9 @@ namespace kjtStore
     public partial class StoreWindow : Window
     {
         private AddOrderWindow addOrder;
+        private Settings settings;
         private Clients clients;
         private Orders orders;
-        private Settings settings;
 
         public StoreWindow()
         {
@@ -20,29 +20,19 @@ namespace kjtStore
             Login.Text = KjtWriterReaderCipher.ReadText(@"pd\lg.kjt", true);
         }
 
-        public void RefreshGrids()
-        {
-            clients.RefreshClientsGrid();
-            orders.RefreshOrdersGrid();
-        }
-
-        public void ReOpenClientsAndOrdersWindows()
-        {
-            if(clients.IsLoaded)
-            {
-                clients.Close();
-                OpenClients();
-            }
-            if(orders.IsLoaded)
-            {
-                orders.Close();
-                OpenOrders();
-            }
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SoundManager.PlayClick();
+
+            if (clients == null || !clients.IsLoaded)
+            {
+                clients = new Clients(orders);
+            }
+            if (orders == null || !orders.IsLoaded)
+            {
+                orders = new Orders(clients);
+            }
+
             OpenAddOrder();
         }
 
@@ -76,7 +66,7 @@ namespace kjtStore
         {
             if (addOrder == null || !addOrder.IsLoaded)
             {
-                addOrder = new AddOrderWindow();
+                addOrder = new AddOrderWindow(clients, orders);
                 addOrder.Show();
             }
             else if (addOrder.IsLoaded && !addOrder.IsActive)
@@ -89,7 +79,7 @@ namespace kjtStore
         {
             if (clients == null || !clients.IsLoaded)
             {
-                clients = new Clients();
+                clients = new Clients(orders);
                 clients.Show();
             }
             else if (clients.IsLoaded && !clients.IsActive)
@@ -102,7 +92,7 @@ namespace kjtStore
         {
             if (orders == null || !orders.IsLoaded)
             {
-                orders = new Orders();
+                orders = new Orders(clients);
                 orders.Show();
             }
             else if (orders.IsLoaded && !orders.IsActive)

@@ -7,6 +7,7 @@ namespace kjtStore
     {
         private static MediaPlayer mpPlayer;
         private static string clickSoundPath;
+        private static string clickContextMenuSound;
 
         static SoundManager()
         {
@@ -19,9 +20,9 @@ namespace kjtStore
             mpPlayer.Play();
         }
 
-        public static void PlaySound(string SoundPath)
+        public static void PlayClickContextMenu()
         {
-            mpPlayer.Open(new Uri(SoundPath, UriKind.Relative));
+            mpPlayer.Open(new Uri(clickContextMenuSound, UriKind.Relative));
             mpPlayer.Play();
         }
 
@@ -31,7 +32,9 @@ namespace kjtStore
             {
                 mpPlayer = new MediaPlayer();
             }
+
             clickSoundPath = @"pd\\Resources\\ClickSound.wav";
+            clickContextMenuSound = @"pd\Resources\ClickContextMenuSound.wav";
         }
     }
 }

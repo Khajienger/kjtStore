@@ -10,14 +10,21 @@ namespace kjtStore
     public partial class AddOrderWindow : Window
     {
         private Connections connections;
+        private Clients clients;
+        private Orders orders;
+
         private Client client;
         private Order order;
 
-        public AddOrderWindow()
+        public AddOrderWindow(Clients Clients, Orders Orders)
         {
             InitializeComponent();
+
             connections = new Connections();
-            connections.StartPreparing();
+            connections.Preparing();
+
+            this.clients = Clients;
+            this.orders = Orders;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -27,7 +34,7 @@ namespace kjtStore
 
             SoundManager.PlayClick();
 
-            if(CheckCorrectClientData())
+            if(CheckCorrectClientData() && CheckCorrectOrderData())
             {
                 client = new Client(
                     firstName.Text,
@@ -35,14 +42,7 @@ namespace kjtStore
                     patronymicName.Text,
                     phone.Text,
                     email.Text);
-            }
-            else
-            {
-                _success = false;
-            }
 
-            if (CheckCorrectOrderData())
-            {
                 order = new Order(
                     email.Text,
                     int.Parse(code.Text),
@@ -50,14 +50,30 @@ namespace kjtStore
             }
             else
             {
-                success = false;
+                _success = false;
             }
 
             success = _success;
 
             if(success)
             {
+                this.Hide();
                 connections.AddNewOrderAndClientInfo(client, order);
+
+                if(clients != null)
+                {
+                    clients.ClientsGrid.DataContext = connections.GetClientsTable();
+                }
+                if(orders != null)
+                {
+                    orders.OrdersGrid.DataContext = connections.GetOrdersTable();
+                }
+
+                SystemSounds.Asterisk.Play();
+                MessageBox.Show(
+                    "Заказ успешно добавлен!",
+                    "Добавление заказа",
+                    MessageBoxButton.OK);
             }
         }
 
@@ -103,7 +119,6 @@ namespace kjtStore
             }
 
             success = _success;
-
             return success;
         }
 

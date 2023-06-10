@@ -27,13 +27,28 @@
                 Background="{StaticResource TextBackColor}"
                 BorderThickness="{StaticResource FirstThickness}"
                 BorderBrush="{StaticResource BorderSecondColor}">
-                
+
+                <MenuItem Header = "Новый клиент"
+                          Click="AddOrder"
+                          Foreground="{StaticResource TextSecondColor}"
+                          BorderBrush="{StaticResource BorderSecondColor}"
+                          BorderThickness="{StaticResource FirstThickness}"
+                          Background="{StaticResource FormBackColor}"/>
+
+                <MenuItem Header = "Редактировать"
+                          Click="EditClient"
+                          Foreground="{StaticResource TextSecondColor}"
+                          BorderBrush="{StaticResource BorderSecondColor}"
+                          BorderThickness="{StaticResource FirstThickness}"
+                          Background="{StaticResource FormBackColor}"/>
+
                 <MenuItem Header = "Удалить"
                           Click="DeleteClient"
                           Foreground="{StaticResource TextSecondColor}"
                           BorderBrush="{StaticResource BorderSecondColor}"
                           BorderThickness="{StaticResource FirstThickness}"
                           Background="{StaticResource FormBackColor}"/>
+                
             </ContextMenu>
         </Grid.ContextMenu>
 
@@ -42,10 +57,8 @@
                   SelectionMode="Single"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
+                  IsReadOnly="True"
                   ItemsSource="{Binding}"
-                  IsReadOnly="False"
-                  CurrentCellChanged="CurrentCellChanging"
-                  CellEditEnding="EndCurrentCellChanging"
                   Foreground="{StaticResource TextThirdColor}"
                   Background="{StaticResource FormBackColor}">
 

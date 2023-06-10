@@ -29,12 +29,19 @@
                 BorderBrush="{StaticResource BorderSecondColor}">
                 
                 <MenuItem Header = "Новый заказ"
-                          Click="OpenAddOrderWindow"
+                          Click="AddOrder"
                           Foreground="{StaticResource TextSecondColor}"
                           BorderBrush="{StaticResource BorderSecondColor}"
                           BorderThickness="{StaticResource FirstThickness}"
                           Background="{StaticResource FormBackColor}"/>
-                
+
+                <MenuItem Header = "Редактировать"
+                          Click="EditOrder"
+                          Foreground="{StaticResource TextSecondColor}"
+                          BorderBrush="{StaticResource BorderSecondColor}"
+                          BorderThickness="{StaticResource FirstThickness}"
+                          Background="{StaticResource FormBackColor}"/>
+
                 <MenuItem Header = "Удалить"
                           Click="DeleteOrder"
                           Foreground="{StaticResource TextSecondColor}"
@@ -50,9 +57,7 @@
                   SelectionMode="Single"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding}"
-                  IsReadOnly="False"
-                  CurrentCellChanged="CurrentCellChanging"
-                  CellEditEnding="EndCurrentCellChanging"
+                  IsReadOnly="True"
                   CanUserAddRows="False"
                   Foreground="{StaticResource TextThirdColor}"
                   Background="{StaticResource FormBackColor}">

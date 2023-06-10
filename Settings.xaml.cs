@@ -15,12 +15,6 @@ namespace kjtStore
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SoundManager.PlayClick();
-            this.Hide();
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             SoundManager.PlayClick();
@@ -40,6 +34,12 @@ namespace kjtStore
                     "Настройки",
                     MessageBoxButton.OK);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SoundManager.PlayClick();
+            this.Hide();
         }
     }
 }

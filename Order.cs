@@ -2,6 +2,10 @@
 {
     internal class Order
     {
+        private string email { get; set; }
+        private int code { get; set; }
+        private string title { get; set; }
+
         public Order(string eMail, int Code, string Title)
         {
             this.email = eMail;
@@ -23,11 +27,5 @@
         {
             return title;
         }
-
-        private string email { get; set; }
-
-        private int code { get; set; }
-
-        private string title { get; set; }
     }
 }

@@ -67,7 +67,6 @@ namespace kjtStore
                 }
 
                 return success;
-
             }
             catch (Exception e)
             {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace kjtStore
 {
@@ -11,46 +9,45 @@ namespace kjtStore
     public partial class Orders
     {
         private AddOrderWindow addOrderWindow;
+        private EditOrderWindow editOrderWindow;
+        private ConfirmDeleteOrderWindow confirmDeleteOrderWindow;
+        private Clients clients;
 
         private Connections connections = new Connections();
-
         private DataRowView dataRowView;
 
-        public Orders()
+        public Orders(Clients Clients)
         {
             InitializeComponent();
-            connections.StartPreparing();
+
+            connections.Preparing();
             connections.SelectOrdersTable();
+
+            this.clients = Clients;
             RefreshOrdersGrid();
         }
 
-        public void RefreshOrdersGrid()
+        private void RefreshOrdersGrid()
         {
             OrdersGrid.DataContext = connections.GetOrdersTable().DefaultView;
         }
 
-        private void CurrentCellChanging(object sender, EventArgs e)
+        private void AddOrder(object sender, RoutedEventArgs e)
         {
-            dataRowView = (DataRowView)OrdersGrid.SelectedItem;
-            dataRowView.BeginEdit();
-        }
-
-        private void EndCurrentCellChanging(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            dataRowView.EndEdit();
-            connections.UpdateOrdersTable();
-        }
-
-        private void OpenAddOrderWindow(object sender, RoutedEventArgs e)
-        {
-            SoundManager.PlaySound(@"pd\Resources\ClickContextMenuSound.wav");
+            SoundManager.PlayClickContextMenu();
             OpenAddOrderWindow();
+        }
+
+        private void EditOrder(object sender, RoutedEventArgs e)
+        {
+            SoundManager.PlayClickContextMenu();
+            OpenEditOrderWindow();
         }
 
         private void DeleteOrder(object sender, RoutedEventArgs e)
         {
-            SoundManager.PlaySound(@"pd\Resources\ClickContextMenuSound.wav");
-            connections.DeleteOrder((DataRowView)OrdersGrid.SelectedItem);
+            SoundManager.PlayClickContextMenu();
+            OpenConfirmDeleteOrderWindow();
         }
 
         #region Управление окнами.
@@ -59,12 +56,41 @@ namespace kjtStore
         {
             if (addOrderWindow == null || !addOrderWindow.IsLoaded)
             {
-                addOrderWindow = new AddOrderWindow();
+                addOrderWindow = new AddOrderWindow(clients, this);
                 addOrderWindow.Show();
             }
             else if (addOrderWindow.IsLoaded && !addOrderWindow.IsActive)
             {
                 addOrderWindow.Show();
+            }
+        }
+
+        private void OpenEditOrderWindow()
+        {
+            dataRowView = (DataRowView)OrdersGrid.SelectedItem;
+
+            if (dataRowView != null)
+            {
+                string[] orderData = new string[3]
+                {
+                    $"{dataRowView.Row.ItemArray[1]}",
+                    $"{dataRowView.Row.ItemArray[2]}",
+                    $"{dataRowView.Row.ItemArray[3]}"
+                };
+
+                editOrderWindow = new EditOrderWindow(int.Parse(dataRowView.Row.ItemArray[0].ToString()), orderData, this);
+                editOrderWindow.Show();
+            }
+        }
+
+        private void OpenConfirmDeleteOrderWindow()
+        {
+            dataRowView = (DataRowView)OrdersGrid.SelectedItem;
+
+            if (dataRowView != null)
+            {
+                confirmDeleteOrderWindow = new ConfirmDeleteOrderWindow(int.Parse(dataRowView.Row.ItemArray[0].ToString()), this, dataRowView);
+                confirmDeleteOrderWindow.Show();
             }
         }
 

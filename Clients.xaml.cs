@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace kjtStore
 {
@@ -10,53 +8,94 @@ namespace kjtStore
     /// </summary>
     public partial class Clients
     {
+        private AddOrderWindow addOrderWindow;
+        private EditClientWindow editClientWindow;
+        private ConfirmDeleteClientWindow confirmDeleteClientWindow;
+        private Orders orders;
+        
         private Connections connections = new Connections();
         private DataRowView dataRowView;
 
-        public Clients()
+        public Clients(Orders Orders)
         {
             InitializeComponent();
-            connections.StartPreparing();
+
+            connections.Preparing();
             connections.SelectClientsTable();
+
+            this.orders = Orders;
             RefreshClientsGrid();
         }
 
-        public void RefreshClientsGrid()
+        private void RefreshClientsGrid()
         {
             ClientsGrid.DataContext = connections.GetClientsTable().DefaultView;
         }
 
-        private void CurrentCellChanging(object sender, EventArgs e)
+        private void AddOrder(object sender, RoutedEventArgs e)
         {
-            dataRowView = (DataRowView)ClientsGrid.SelectedItem;
-            dataRowView.BeginEdit();
+            SoundManager.PlayClickContextMenu();
+            OpenAddOrderWindow();
         }
 
-        private void EndCurrentCellChanging(object sender, DataGridCellEditEndingEventArgs e)
+        private void EditClient(object sender, RoutedEventArgs e)
         {
-            void OnEndChangingCycle()
-            {
-                try
-                {
-                    dataRowView.EndEdit();
-                    connections.UpdateClientsTable();
-                }
-                catch (NullReferenceException)
-                {
-                    connections.StartPreparing();
-                    OnEndChangingCycle();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"{ex.Message}");
-                }
-            }
+            OpenEditClientWindow();
+            SoundManager.PlayClickContextMenu();
         }
 
         private void DeleteClient(object sender, RoutedEventArgs e)
         {
-            SoundManager.PlaySound(@"pd\Resources\ClickContextMenuSound.wav");
-            connections.DeleteClient((DataRowView)ClientsGrid.SelectedItem);
+            SoundManager.PlayClickContextMenu();
+            OpenConfirmDeleteClientWindow();
         }
+
+        #region Управление окнами.
+
+        private void OpenAddOrderWindow()
+        {
+            if (addOrderWindow == null || !addOrderWindow.IsLoaded)
+            {
+                addOrderWindow = new AddOrderWindow(this, orders);
+                addOrderWindow.Show();
+            }
+            else if (addOrderWindow.IsLoaded && !addOrderWindow.IsActive)
+            {
+                addOrderWindow.Show();
+            }
+        }
+
+        private void OpenEditClientWindow()
+        {
+            dataRowView = (DataRowView)ClientsGrid.SelectedItem;
+
+            if (dataRowView != null)
+            {
+                string[] clientData = new string[5]
+                {
+                $"{dataRowView.Row.ItemArray[1]}",
+                $"{dataRowView.Row.ItemArray[2]}",
+                $"{dataRowView.Row.ItemArray[3]}",
+                $"{dataRowView.Row.ItemArray[4]}",
+                $"{dataRowView.Row.ItemArray[5]}"
+                };
+
+                editClientWindow = new EditClientWindow(int.Parse(dataRowView.Row.ItemArray[0].ToString()), clientData, this);
+                editClientWindow.Show();
+            }
+        }
+
+        private void OpenConfirmDeleteClientWindow()
+        {
+            dataRowView = (DataRowView)ClientsGrid.SelectedItem;
+
+            if (dataRowView != null)
+            {
+                confirmDeleteClientWindow = new ConfirmDeleteClientWindow(int.Parse(dataRowView.Row.ItemArray[0].ToString()), this, dataRowView);
+                confirmDeleteClientWindow.Show();
+            }
+        }
+
+        #endregion
     }
 }
